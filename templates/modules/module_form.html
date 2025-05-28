@@ -47,34 +47,14 @@
 	</div>
 
 	<div class="col-lg-4">
-		<div class="card">
-			<div class="card-header">
-				<h6 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Tips</h6>
-			</div>
-			<div class="card-body">
-				<ul class="list-unstyled">
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Fill in all
-						required fields</li>
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Use clear,
-						descriptive titles</li>
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Ensure
-						workload hours add up correctly</li>
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Be specific
-						with competencies</li>
-				</ul>
-			</div>
-		</div>
-
 		{% if module %}
 		<div class="card mt-3">
 			<div class="card-header">
 				<h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>History</h6>
 			</div>
 			<div class="card-body">
-				<p><small class="text-muted">Created:</small><br>{{ module.created_at|date:"M d, Y H:i"
-					}}</p>
-				<p><small class="text-muted">Last updated:</small><br>{{ module.updated_at|date:"M d, Y
-					H:i" }}</p>
+				<p><small class="text-muted">Created:</small><br>{{ module.created_at|date:"M d, Y H:i" }}</p>
+				<p><small class="text-muted">Last updated:</small><br>{{ module.updated_at|date:"M d, Y H:i" }}</p>
 			</div>
 		</div>
 		{% endif %}

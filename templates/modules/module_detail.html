@@ -28,7 +28,6 @@
 
 <div class="row">
 	<div class="col-lg-8">
-		<!-- Basic Information -->
 		<div class="card mb-4">
 			<div class="card-header bg-primary text-white">
 				<h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Basic Information</h5>
@@ -56,7 +55,6 @@
 			</div>
 		</div>
 
-		<!-- Study Details -->
 		<div class="card mb-4">
 			<div class="card-header bg-secondary text-white">
 				<h5 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Study Details</h5>
@@ -85,7 +83,6 @@
 			</div>
 		</div>
 
-		<!-- Competencies -->
 		<div class="card mb-4">
 			<div class="card-header bg-success text-white">
 				<h5 class="mb-0"><i class="bi bi-target me-2"></i>Competencies</h5>
@@ -104,7 +101,6 @@
 			</div>
 		</div>
 
-		<!-- Learning Outcomes -->
 		{% if module.learning_outcomes.all %}
 		<div class="card mb-4">
 			<div class="card-header bg-info text-white">
@@ -127,7 +123,6 @@
 		</div>
 		{% endif %}
 
-		<!-- Topics -->
 		{% if module.topics.all %}
 		<div class="card mb-4">
 			<div class="card-header bg-warning text-dark">
@@ -171,7 +166,6 @@
 		</div>
 		{% endif %}
 
-		<!-- Assessments -->
 		{% if module.assessments.all %}
 		<div class="card mb-4">
 			<div class="card-header bg-danger text-white">
@@ -201,7 +195,6 @@
 		</div>
 		{% endif %}
 
-		<!-- Literature -->
 		{% if module.literature.all %}
 		<div class="card mb-4">
 			<div class="card-header bg-dark text-white">
@@ -227,7 +220,6 @@
 		{% endif %}
 	</div>
 
-	<!-- Sidebar -->
 	<div class="col-lg-4">
 		<div class="card mb-4">
 			<div class="card-header">
@@ -257,38 +249,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="card">
-			<div class="card-header">
-				<h6 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Tips</h6>
-			</div>
-			<div class="card-body">
-				<ul class="list-unstyled">
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Fill in all
-						required fields</li>
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Use clear,
-						descriptive titles</li>
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Ensure
-						workload hours add up correctly</li>
-					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Be specific
-						with competencies</li>
-				</ul>
-			</div>
-		</div>
-
-		{% if module %}
-		<div class="card mt-3">
-			<div class="card-header">
-				<h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>History</h6>
-			</div>
-			<div class="card-body">
-				<p><small class="text-muted">Created:</small><br>{{ module.created_at|date:"M d, Y H:i"
-					}}</p>
-				<p><small class="text-muted">Last updated:</small><br>{{ module.updated_at|date:"M d, Y
-					H:i" }}</p>
-			</div>
-		</div>
-		{% endif %}
 	</div>
 </div>
 {% endblock %}

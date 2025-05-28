@@ -36,6 +36,6 @@ class ModuleAdmin(admin.ModelAdmin):
         return qs.filter(user=request.user)
     
     def save_model(self, request, obj, form, change):
-        if not change:  # Only set user on creation
+        if not change:
             obj.user = request.user
         super().save_model(request, obj, form, change)

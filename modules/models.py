@@ -6,23 +6,18 @@ from django.urls import reverse
 class Module(models.Model):
     """Main module model representing a university course module"""
     
-    # Ownership
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='modules')
     
-    # Basic Information
     name = models.CharField(max_length=200, verbose_name="Module Name")
     code = models.CharField(max_length=50, blank=True, verbose_name="Module Code")
     
-    # Instructor Information
     coordinating_instructor = models.CharField(max_length=100, verbose_name="Coordinating Instructor")
     other_instructors = models.TextField(blank=True, verbose_name="Other Instructors")
     
-    # Department Information
     department = models.CharField(max_length=100, verbose_name="Department")
     faculty = models.CharField(max_length=100, verbose_name="Faculty")
     university = models.CharField(max_length=100, default="Vilnius University", verbose_name="University")
     
-    # Study Details
     STUDY_LEVEL_CHOICES = [
         ('first', 'First Level (Bachelor)'),
         ('second', 'Second Level (Master)'),
@@ -53,20 +48,16 @@ class Module(models.Model):
     semester = models.CharField(max_length=50, verbose_name="Semester")
     language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, verbose_name="Language")
     
-    # Prerequisites
     prerequisites = models.TextField(blank=True, verbose_name="Prerequisites")
     
-    # Workload
     credits = models.IntegerField(verbose_name="Credits")
     total_workload = models.IntegerField(verbose_name="Total Student Workload (hours)")
     contact_hours = models.IntegerField(verbose_name="Contact Hours")
     self_study_hours = models.IntegerField(verbose_name="Self-study Hours")
     
-    # Course Goals and Competencies
     general_competencies = models.TextField(verbose_name="General Competencies")
     subject_competencies = models.TextField(verbose_name="Subject-specific Competencies")
     
-    # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

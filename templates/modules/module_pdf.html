@@ -212,7 +212,6 @@
 </head>
 
 <body>
-	<!-- Header -->
 	<div class="header">
 		<h1>{{ module.name }}</h1>
 		<p class="subtitle">Module Description</p>
@@ -221,7 +220,6 @@
 		{% endif %}
 	</div>
 
-	<!-- Basic Information -->
 	<div class="section">
 		<h2 class="section-title">Basic Information</h2>
 		<div class="info-grid">
@@ -264,7 +262,6 @@
 		</div>
 	</div>
 
-	<!-- Study Details -->
 	<div class="section">
 		<h2 class="section-title">Study Details</h2>
 		<div class="info-grid">
@@ -302,7 +299,6 @@
 		{% endif %}
 	</div>
 
-	<!-- Workload Summary -->
 	<div class="section">
 		<h2 class="section-title">Workload Summary</h2>
 		<div class="workload-summary">
@@ -325,7 +321,6 @@
 		</div>
 	</div>
 
-	<!-- Competencies -->
 	<div class="section">
 		<h2 class="section-title">Competencies</h2>
 		<div class="info-item">
@@ -338,7 +333,6 @@
 		</div>
 	</div>
 
-	<!-- Learning Outcomes -->
 	{% if module.learning_outcomes.all %}
 	<div class="section">
 		<h2 class="section-title">Learning Outcomes</h2>
@@ -354,7 +348,6 @@
 	</div>
 	{% endif %}
 
-	<!-- Topics and Schedule -->
 	{% if module.topics.all %}
 	<div class="section page-break">
 		<h2 class="section-title">Topics and Schedule</h2>
@@ -386,7 +379,6 @@
 	</div>
 	{% endif %}
 
-	<!-- Assessment Methods -->
 	{% if module.assessments.all %}
 	<div class="section">
 		<h2 class="section-title">Assessment Methods</h2>
@@ -407,7 +399,6 @@
 	</div>
 	{% endif %}
 
-	<!-- Literature -->
 	{% if module.literature.all %}
 	<div class="section">
 		<h2 class="section-title">Literature</h2>
@@ -427,7 +418,6 @@
 	</div>
 	{% endif %}
 
-	<!-- Footer -->
 	<div class="section" style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px;">
 		<div style="text-align: center; color: #666; font-size: 9pt;">
 			<p>Generated on {{ "now"|date:"F j, Y \a\t g:i A" }}</p>

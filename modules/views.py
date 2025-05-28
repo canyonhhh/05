@@ -45,7 +45,6 @@ def module_detail(request, pk):
     """View a specific module"""
     module = get_object_or_404(Module, pk=pk)
     
-    # Ensure user can only view their own modules
     if module.user != request.user:
         raise Http404("Module not found")
     
@@ -77,7 +76,6 @@ def module_edit(request, pk):
     """Edit an existing module"""
     module = get_object_or_404(Module, pk=pk)
     
-    # Ensure user can only edit their own modules
     if module.user != request.user:
         raise Http404("Module not found")
     
@@ -102,7 +100,6 @@ def module_delete(request, pk):
     """Delete a module"""
     module = get_object_or_404(Module, pk=pk)
     
-    # Ensure user can only delete their own modules
     if module.user != request.user:
         raise Http404("Module not found")
     
@@ -118,17 +115,13 @@ def module_pdf(request, pk):
     """Generate and download PDF for a module"""
     module = get_object_or_404(Module, pk=pk)
     
-    # Ensure user can only access their own modules
     if module.user != request.user:
         raise Http404("Module not found")
     
-    # Generate PDF
     pdf_content = generate_module_pdf(module)
     
-    # Create response
     response = HttpResponse(pdf_content, content_type='application/pdf')
     filename = f"module_{module.code or module.id}_{module.name[:50]}.pdf"
-    # Clean filename
     filename = "".join(c for c in filename if c.isalnum() or c in "._- ").strip()
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     

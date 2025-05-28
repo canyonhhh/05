@@ -6,7 +6,6 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<!-- Dashboard for logged-in users -->
 <div class="hero-section py-5">
 	<div class="container">
 		<div class="row align-items-center">
@@ -32,7 +31,6 @@
 
 <div class="container py-5">
 	<div class="row">
-		<!-- Stats Cards -->
 		<div class="col-md-4 mb-4">
 			<div class="card stats-card h-100">
 				<div class="card-body">
@@ -46,48 +44,8 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="col-md-4 mb-4">
-			<div class="card stats-card h-100">
-				<div class="card-body">
-					<div class="d-flex justify-content-between align-items-center">
-						<div>
-							<h5 class="card-title text-muted">Total Credits</h5>
-							<h2 class="text-success">
-								{% if modules %}
-								{% for module in modules %}
-								{{ module.credits }}{% if not forloop.last %} + {% endif %}
-								{% endfor %}
-								{% else %}
-								0
-								{% endif %}
-							</h2>
-						</div>
-						<i class="bi bi-trophy text-success" style="font-size: 2rem;"></i>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-4 mb-4">
-			<div class="card stats-card h-100">
-				<div class="card-body">
-					<div class="d-flex justify-content-between align-items-center">
-						<div>
-							<h5 class="card-title text-muted">Recent Activity</h5>
-							<h2 class="text-info">
-								{% if modules %}{{ modules.first.updated_at|timesince }}
-								ago{% else %}None{% endif %}
-							</h2>
-						</div>
-						<i class="bi bi-clock-history text-info" style="font-size: 2rem;"></i>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 
-	<!-- Recent Modules -->
 	{% if modules %}
 	<div class="row">
 		<div class="col-12">
@@ -137,15 +95,12 @@
 </div>
 
 {% else %}
-<!-- Landing page for non-authenticated users -->
 <div class="hero-section py-5">
 	<div class="container">
 		<div class="row align-items-center min-vh-75">
 			<div class="col-lg-6">
 				<h1 class="display-3 fw-bold mb-4">Module Manager</h1>
-				<p class="lead mb-4">Organize and manage your university course modules with ease.
-					Create professional module descriptions, track competencies, and generate PDF
-					documents.</p>
+				<p class="lead mb-4">Organize and manage your university course modules.</p>
 				<div class="d-flex gap-3">
 					<a href="{% url 'register' %}" class="btn btn-light btn-lg">
 						<i class="bi bi-person-plus me-2"></i>Get Started
@@ -158,27 +113,6 @@
 			<div class="col-lg-6 text-center">
 				<i class="bi bi-journal-text display-1"></i>
 			</div>
-		</div>
-	</div>
-</div>
-
-<div class="container py-5">
-	<div class="row">
-		<div class="col-lg-4 text-center mb-4">
-			<i class="bi bi-file-earmark-text text-primary display-4 mb-3"></i>
-			<h4>Create Modules</h4>
-			<p class="text-muted">Design comprehensive module descriptions with all necessary academic
-				details.</p>
-		</div>
-		<div class="col-lg-4 text-center mb-4">
-			<i class="bi bi-shield-check text-success display-4 mb-3"></i>
-			<h4>Secure & Private</h4>
-			<p class="text-muted">Your modules are private and only accessible to you.</p>
-		</div>
-		<div class="col-lg-4 text-center mb-4">
-			<i class="bi bi-file-pdf text-danger display-4 mb-3"></i>
-			<h4>Export to PDF</h4>
-			<p class="text-muted">Generate professional PDF documents for official use.</p>
 		</div>
 	</div>
 </div>
