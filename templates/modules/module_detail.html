@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ module.name }} - Module Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+			<li class="breadcrumb-item"><a href="{% url 'module_list' %}">Modules</a></li>
+			<li class="breadcrumb-item active">{{ module.name }}</li>
+		</ol>
+	</nav>
+
+	<div class="btn-group" role="group">
+		<a href="{% url 'module_edit' module.pk %}" class="btn btn-outline-primary">
+			<i class="bi bi-pencil me-1"></i>Edit
+		</a>
+		<button type="button" class="btn btn-outline-success">
+			<i class="bi bi-file-pdf me-1"></i>Export PDF
+		</button>
+		<a href="{% url 'module_delete' module.pk %}" class="btn btn-outline-danger">
+			<i class="bi bi-trash me-1"></i>Delete
+		</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-8">
+		<!-- Basic Information -->
+		<div class="card mb-4">
+			<div class="card-header bg-primary text-white">
+				<h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Basic Information</h5>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-8">
+						<h2 class="mb-3">{{ module.name }}</h2>
+						{% if module.code %}
+						<p><strong>Module Code:</strong> {{ module.code }}</p>
+						{% endif %}
+						<p><strong>Coordinating Instructor:</strong> {{
+							module.coordinating_instructor }}</p>
+						{% if module.other_instructors %}
+						<p><strong>Other Instructors:</strong> {{
+							module.other_instructors|linebreaks }}</p>
+						{% endif %}
+					</div>
+					<div class="col-md-4">
+						<p><strong>Department:</strong> {{ module.department }}</p>
+						<p><strong>Faculty:</strong> {{ module.faculty }}</p>
+						<p><strong>University:</strong> {{ module.university }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Study Details -->
+		<div class="card mb-4">
+			<div class="card-header bg-secondary text-white">
+				<h5 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Study Details</h5>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-6">
+						<p><strong>Study Level:</strong> {{ module.get_study_level_display }}
+						</p>
+						<p><strong>Module Type:</strong> {{ module.get_module_type_display }}
+						</p>
+						<p><strong>Implementation:</strong> {{
+							module.get_implementation_form_display }}</p>
+					</div>
+					<div class="col-md-6">
+						<p><strong>Semester:</strong> {{ module.semester }}</p>
+						<p><strong>Language:</strong> {{ module.get_language_display }}</p>
+					</div>
+				</div>
+				{% if module.prerequisites %}
+				<div class="mt-3">
+					<p><strong>Prerequisites:</strong></p>
+					<div class="bg-light p-3 rounded">{{ module.prerequisites|linebreaks }}</div>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+
+		<!-- Competencies -->
+		<div class="card mb-4">
+			<div class="card-header bg-success text-white">
+				<h5 class="mb-0"><i class="bi bi-target me-2"></i>Competencies</h5>
+			</div>
+			<div class="card-body">
+				<div class="mb-4">
+					<h6><strong>General Competencies:</strong></h6>
+					<div class="bg-light p-3 rounded">{{ module.general_competencies|linebreaks }}
+					</div>
+				</div>
+				<div>
+					<h6><strong>Subject-specific Competencies:</strong></h6>
+					<div class="bg-light p-3 rounded">{{ module.subject_competencies|linebreaks }}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Learning Outcomes -->
+		{% if module.learning_outcomes.all %}
+		<div class="card mb-4">
+			<div class="card-header bg-info text-white">
+				<h5 class="mb-0"><i class="bi bi-bullseye me-2"></i>Learning Outcomes</h5>
+			</div>
+			<div class="card-body">
+				{% for outcome in module.learning_outcomes.all %}
+				<div class="d-flex mb-3">
+					<span class="badge bg-primary me-3">{{ forloop.counter }}</span>
+					<div class="flex-fill">
+						<p class="mb-1">{{ outcome.description }}</p>
+						{% if outcome.competency_code %}
+						<small class="text-muted">Competency: {{ outcome.competency_code
+							}}</small>
+						{% endif %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+
+		<!-- Topics -->
+		{% if module.topics.all %}
+		<div class="card mb-4">
+			<div class="card-header bg-warning text-dark">
+				<h5 class="mb-0"><i class="bi bi-list-ol me-2"></i>Topics & Schedule</h5>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Topic</th>
+								<th>Lectures</th>
+								<th>Practicals</th>
+								<th>Self-study</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for topic in module.topics.all %}
+							<tr>
+								<td><strong>{{ topic.title }}</strong></td>
+								<td>{{ topic.lecture_hours }}h</td>
+								<td>{{ topic.practical_hours }}h</td>
+								<td>{{ topic.self_study_hours }}h</td>
+								<td><strong>{{ topic.total_contact_hours|add:topic.self_study_hours
+										}}h</strong></td>
+							</tr>
+							{% if topic.assignments %}
+							<tr>
+								<td colspan="5" class="text-muted">
+									<small><strong>Assignments:</strong> {{
+										topic.assignments }}</small>
+								</td>
+							</tr>
+							{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+		<!-- Assessments -->
+		{% if module.assessments.all %}
+		<div class="card mb-4">
+			<div class="card-header bg-danger text-white">
+				<h5 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Assessment Methods</h5>
+			</div>
+			<div class="card-body">
+				{% for assessment in module.assessments.all %}
+				<div class="row mb-3">
+					<div class="col-md-4">
+						<h6>{{ assessment.method }}</h6>
+						<span class="badge bg-primary">{{ assessment.weight_percentage
+							}}%</span>
+					</div>
+					<div class="col-md-4">
+						<small class="text-muted">Timing:</small><br>
+						{{ assessment.timing }}
+					</div>
+					<div class="col-md-4">
+						<small class="text-muted">Criteria:</small><br>
+						{{ assessment.criteria|truncatewords:20 }}
+					</div>
+				</div>
+				{% if not forloop.last %}
+				<hr>{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+
+		<!-- Literature -->
+		{% if module.literature.all %}
+		<div class="card mb-4">
+			<div class="card-header bg-dark text-white">
+				<h5 class="mb-0"><i class="bi bi-book me-2"></i>Literature</h5>
+			</div>
+			<div class="card-body">
+				{% regroup module.literature.all by literature_type as literature_groups %}
+				{% for group in literature_groups %}
+				<h6 class="text-primary">{{ group.grouper|title }}</h6>
+				<ul class="list-unstyled mb-4">
+					{% for lit in group.list %}
+					<li class="mb-2">
+						<strong>{{ lit.author }}</strong> ({{ lit.year }}). <em>{{ lit.title
+							}}</em>
+						{% if lit.volume_or_issue %}, {{ lit.volume_or_issue }}{% endif %}.
+						{{ lit.publisher_or_url }}
+					</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+	</div>
+
+	<!-- Sidebar -->
+	<div class="col-lg-4">
+		<div class="card mb-4">
+			<div class="card-header">
+				<h6 class="mb-0"><i class="bi bi-clock me-2"></i>Workload Summary</h6>
+			</div>
+			<div class="card-body">
+				<div class="row text-center">
+					<div class="col-6">
+						<h4 class="text-primary">{{ module.credits }}</h4>
+						<small class="text-muted">Credits</small>
+					</div>
+					<div class="col-6">
+						<h4 class="text-success">{{ module.total_workload }}</h4>
+						<small class="text-muted">Total Hours</small>
+					</div>
+				</div>
+				<hr>
+				<div class="row text-center">
+					<div class="col-6">
+						<h5 class="text-info">{{ module.contact_hours }}</h5>
+						<small class="text-muted">Contact</small>
+					</div>
+					<div class="col-6">
+						<h5 class="text-warning">{{ module.self_study_hours }}</h5>
+						<small class="text-muted">Self-study</small>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<h6 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Tips</h6>
+			</div>
+			<div class="card-body">
+				<ul class="list-unstyled">
+					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Fill in all
+						required fields</li>
+					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Use clear,
+						descriptive titles</li>
+					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Ensure
+						workload hours add up correctly</li>
+					<li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Be specific
+						with competencies</li>
+				</ul>
+			</div>
+		</div>
+
+		{% if module %}
+		<div class="card mt-3">
+			<div class="card-header">
+				<h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>History</h6>
+			</div>
+			<div class="card-body">
+				<p><small class="text-muted">Created:</small><br>{{ module.created_at|date:"M d, Y H:i"
+					}}</p>
+				<p><small class="text-muted">Last updated:</small><br>{{ module.updated_at|date:"M d, Y
+					H:i" }}</p>
+			</div>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

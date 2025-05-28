@@ -1,0 +1,5 @@
+Django
+Pillow
+WeasyPrint
+django-crispy-forms
+crispy-bootstrap5

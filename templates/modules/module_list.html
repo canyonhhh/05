@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}My Modules - Module Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+	<h2><i class="bi bi-collection me-2"></i>My Modules</h2>
+	<a href="{% url 'module_create' %}" class="btn btn-primary">
+		<i class="bi bi-plus-circle me-2"></i>Create New Module
+	</a>
+</div>
+
+{% if modules %}
+<div class="row">
+	{% for module in modules %}
+	<div class="col-lg-6 col-xl-4 mb-4">
+		<div class="card card-hover h-100">
+			<div class="card-body">
+				<div class="d-flex justify-content-between align-items-start mb-3">
+					<h5 class="card-title mb-0">{{ module.name }}</h5>
+					<span class="badge bg-primary">{{ module.credits }} credits</span>
+				</div>
+
+				{% if module.code %}
+				<p class="text-muted mb-2"><strong>Code:</strong> {{ module.code }}</p>
+				{% endif %}
+
+				<p class="text-muted mb-2"><strong>Department:</strong> {{ module.department }}</p>
+				<p class="text-muted mb-2"><strong>Level:</strong> {{ module.get_study_level_display }}
+				</p>
+				<p class="text-muted mb-3"><strong>Type:</strong> {{ module.get_module_type_display }}
+				</p>
+
+				<small class="text-muted d-block mb-3">
+					Updated {{ module.updated_at|timesince }} ago
+				</small>
+
+				<div class="d-flex gap-2">
+					<a href="{% url 'module_detail' module.pk %}"
+						class="btn btn-outline-primary btn-sm flex-fill">
+						<i class="bi bi-eye me-1"></i>View
+					</a>
+					<a href="{% url 'module_edit' module.pk %}"
+						class="btn btn-outline-secondary btn-sm flex-fill">
+						<i class="bi bi-pencil me-1"></i>Edit
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+	<i class="bi bi-inbox display-1 text-muted"></i>
+	<h3 class="mt-3 text-muted">No modules found</h3>
+	<p class="text-muted">You haven't created any modules yet.</p>
+	<a href="{% url 'module_create' %}" class="btn btn-primary btn-lg">
+		<i class="bi bi-plus-circle me-2"></i>Create Your First Module
+	</a>
+</div>
+{% endif %}
+{% endblock %}
