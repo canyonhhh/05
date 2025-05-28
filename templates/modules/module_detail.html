@@ -40,11 +40,11 @@
 						{% if module.code %}
 						<p><strong>Module Code:</strong> {{ module.code }}</p>
 						{% endif %}
-						<p><strong>Coordinating Instructor:</strong> {{
-							module.coordinating_instructor }}</p>
+						<p><strong>Coordinating Instructor:</strong>
+							{{ module.coordinating_instructor }}</p>
 						{% if module.other_instructors %}
-						<p><strong>Other Instructors:</strong> {{
-							module.other_instructors|linebreaks }}</p>
+						<p><strong>Other Instructors:</strong> 
+							{{ module.other_instructors|linebreaks }}</p>
 						{% endif %}
 					</div>
 					<div class="col-md-4">
@@ -68,8 +68,8 @@
 						</p>
 						<p><strong>Module Type:</strong> {{ module.get_module_type_display }}
 						</p>
-						<p><strong>Implementation:</strong> {{
-							module.get_implementation_form_display }}</p>
+						<p><strong>Implementation:</strong> 
+							{{ module.get_implementation_form_display }}</p>
 					</div>
 					<div class="col-md-6">
 						<p><strong>Semester:</strong> {{ module.semester }}</p>
@@ -158,8 +158,8 @@
 							{% if topic.assignments %}
 							<tr>
 								<td colspan="5" class="text-muted">
-									<small><strong>Assignments:</strong> {{
-										topic.assignments }}</small>
+									<small><strong>Assignments:</strong> 
+										{{ topic.assignments }}</small>
 								</td>
 							</tr>
 							{% endif %}
