@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.http import Http404
 from .models import Module
 from .forms import ModuleForm
+from django.http import HttpResponse
+from .pdf import generate_module_pdf
 
 
 def home(request):
@@ -111,3 +113,23 @@ def module_delete(request, pk):
     
     return render(request, 'modules/module_confirm_delete.html', {'module': module})
 
+@login_required
+def module_pdf(request, pk):
+    """Generate and download PDF for a module"""
+    module = get_object_or_404(Module, pk=pk)
+    
+    # Ensure user can only access their own modules
+    if module.user != request.user:
+        raise Http404("Module not found")
+    
+    # Generate PDF
+    pdf_content = generate_module_pdf(module)
+    
+    # Create response
+    response = HttpResponse(pdf_content, content_type='application/pdf')
+    filename = f"module_{module.code or module.id}_{module.name[:50]}.pdf"
+    # Clean filename
+    filename = "".join(c for c in filename if c.isalnum() or c in "._- ").strip()
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    
+    return response

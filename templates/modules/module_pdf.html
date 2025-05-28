@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ module.name }} - Module Description</title>
+	<style>
+		/* PDF-specific styles */
+		@page {
+			size: A4;
+			margin: 2cm;
+
+			@top-center {
+				content: "Module Description - {{ module.name }}";
+				font-size: 10pt;
+				color: #666;
+			}
+
+			@bottom-center {
+				content: "Page " counter(page) " of " counter(pages);
+				font-size: 10pt;
+				color: #666;
+			}
+		}
+
+		body {
+			font-family: 'DejaVu Sans', Arial, sans-serif;
+			font-size: 11pt;
+			line-height: 1.4;
+			color: #333;
+			margin: 0;
+			padding: 0;
+		}
+
+		.header {
+			text-align: center;
+			margin-bottom: 30px;
+			border-bottom: 2px solid #007bff;
+			padding-bottom: 20px;
+		}
+
+		.header h1 {
+			color: #007bff;
+			font-size: 24pt;
+			margin: 0 0 10px 0;
+			font-weight: bold;
+		}
+
+		.header .subtitle {
+			color: #666;
+			font-size: 14pt;
+			margin: 0;
+		}
+
+		.section {
+			margin-bottom: 25px;
+			page-break-inside: avoid;
+		}
+
+		.section-title {
+			background-color: #f8f9fa;
+			color: #007bff;
+			font-size: 14pt;
+			font-weight: bold;
+			padding: 8px 12px;
+			margin: 0 0 15px 0;
+			border-left: 4px solid #007bff;
+		}
+
+		.info-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
+			margin-bottom: 15px;
+		}
+
+		.info-item {
+			margin-bottom: 8px;
+		}
+
+		.info-label {
+			font-weight: bold;
+			color: #555;
+			display: inline-block;
+			width: 120px;
+		}
+
+		.info-value {
+			color: #333;
+		}
+
+		.text-content {
+			background-color: #f8f9fa;
+			padding: 12px;
+			border-radius: 4px;
+			margin: 10px 0;
+			border-left: 3px solid #007bff;
+		}
+
+		.workload-summary {
+			background-color: #e7f3ff;
+			padding: 15px;
+			border-radius: 6px;
+			margin: 15px 0;
+			text-align: center;
+		}
+
+		.workload-item {
+			display: inline-block;
+			margin: 0 20px;
+			text-align: center;
+		}
+
+		.workload-number {
+			font-size: 18pt;
+			font-weight: bold;
+			color: #007bff;
+			display: block;
+		}
+
+		.workload-label {
+			font-size: 10pt;
+			color: #666;
+			text-transform: uppercase;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 15px 0;
+			font-size: 10pt;
+		}
+
+		table th {
+			background-color: #007bff;
+			color: white;
+			padding: 8px;
+			text-align: left;
+			font-weight: bold;
+		}
+
+		table td {
+			padding: 6px 8px;
+			border-bottom: 1px solid #ddd;
+		}
+
+		table tr:nth-child(even) {
+			background-color: #f8f9fa;
+		}
+
+		.outcome-item {
+			margin-bottom: 12px;
+			padding: 8px;
+			background-color: #f8f9fa;
+			border-radius: 4px;
+		}
+
+		.outcome-number {
+			display: inline-block;
+			background-color: #007bff;
+			color: white;
+			width: 24px;
+			height: 24px;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 24px;
+			font-weight: bold;
+			margin-right: 10px;
+			font-size: 9pt;
+		}
+
+		.literature-item {
+			margin-bottom: 8px;
+			padding-left: 15px;
+			text-indent: -15px;
+		}
+
+		.assessment-item {
+			margin-bottom: 15px;
+			padding: 10px;
+			background-color: #f8f9fa;
+			border-radius: 4px;
+		}
+
+		.assessment-method {
+			font-weight: bold;
+			color: #007bff;
+			margin-bottom: 5px;
+		}
+
+		.assessment-weight {
+			background-color: #007bff;
+			color: white;
+			padding: 2px 8px;
+			border-radius: 12px;
+			font-size: 9pt;
+			font-weight: bold;
+		}
+
+		.page-break {
+			page-break-before: always;
+		}
+
+		.no-data {
+			color: #999;
+			font-style: italic;
+			text-align: center;
+			padding: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Header -->
+	<div class="header">
+		<h1>{{ module.name }}</h1>
+		<p class="subtitle">Module Description</p>
+		{% if module.code %}
+		<p class="subtitle">Code: {{ module.code }}</p>
+		{% endif %}
+	</div>
+
+	<!-- Basic Information -->
+	<div class="section">
+		<h2 class="section-title">Basic Information</h2>
+		<div class="info-grid">
+			<div>
+				<div class="info-item">
+					<span class="info-label">Module Name:</span>
+					<span class="info-value">{{ module.name }}</span>
+				</div>
+				{% if module.code %}
+				<div class="info-item">
+					<span class="info-label">Module Code:</span>
+					<span class="info-value">{{ module.code }}</span>
+				</div>
+				{% endif %}
+				<div class="info-item">
+					<span class="info-label">Coordinator:</span>
+					<span class="info-value">{{ module.coordinating_instructor }}</span>
+				</div>
+				{% if module.other_instructors %}
+				<div class="info-item">
+					<span class="info-label">Other Instructors:</span>
+					<span class="info-value">{{ module.other_instructors }}</span>
+				</div>
+				{% endif %}
+			</div>
+			<div>
+				<div class="info-item">
+					<span class="info-label">Department:</span>
+					<span class="info-value">{{ module.department }}</span>
+				</div>
+				<div class="info-item">
+					<span class="info-label">Faculty:</span>
+					<span class="info-value">{{ module.faculty }}</span>
+				</div>
+				<div class="info-item">
+					<span class="info-label">University:</span>
+					<span class="info-value">{{ module.university }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Study Details -->
+	<div class="section">
+		<h2 class="section-title">Study Details</h2>
+		<div class="info-grid">
+			<div>
+				<div class="info-item">
+					<span class="info-label">Study Level:</span>
+					<span class="info-value">{{ module.get_study_level_display }}</span>
+				</div>
+				<div class="info-item">
+					<span class="info-label">Module Type:</span>
+					<span class="info-value">{{ module.get_module_type_display }}</span>
+				</div>
+				<div class="info-item">
+					<span class="info-label">Implementation:</span>
+					<span class="info-value">{{ module.get_implementation_form_display }}</span>
+				</div>
+			</div>
+			<div>
+				<div class="info-item">
+					<span class="info-label">Semester:</span>
+					<span class="info-value">{{ module.semester }}</span>
+				</div>
+				<div class="info-item">
+					<span class="info-label">Language:</span>
+					<span class="info-value">{{ module.get_language_display }}</span>
+				</div>
+			</div>
+		</div>
+
+		{% if module.prerequisites %}
+		<div class="info-item">
+			<span class="info-label">Prerequisites:</span>
+			<div class="text-content">{{ module.prerequisites|linebreaks }}</div>
+		</div>
+		{% endif %}
+	</div>
+
+	<!-- Workload Summary -->
+	<div class="section">
+		<h2 class="section-title">Workload Summary</h2>
+		<div class="workload-summary">
+			<div class="workload-item">
+				<span class="workload-number">{{ module.credits }}</span>
+				<span class="workload-label">Credits</span>
+			</div>
+			<div class="workload-item">
+				<span class="workload-number">{{ module.total_workload }}</span>
+				<span class="workload-label">Total Hours</span>
+			</div>
+			<div class="workload-item">
+				<span class="workload-number">{{ module.contact_hours }}</span>
+				<span class="workload-label">Contact Hours</span>
+			</div>
+			<div class="workload-item">
+				<span class="workload-number">{{ module.self_study_hours }}</span>
+				<span class="workload-label">Self-study Hours</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Competencies -->
+	<div class="section">
+		<h2 class="section-title">Competencies</h2>
+		<div class="info-item">
+			<span class="info-label">General Competencies:</span>
+			<div class="text-content">{{ module.general_competencies|linebreaks }}</div>
+		</div>
+		<div class="info-item">
+			<span class="info-label">Subject-specific Competencies:</span>
+			<div class="text-content">{{ module.subject_competencies|linebreaks }}</div>
+		</div>
+	</div>
+
+	<!-- Learning Outcomes -->
+	{% if module.learning_outcomes.all %}
+	<div class="section">
+		<h2 class="section-title">Learning Outcomes</h2>
+		{% for outcome in module.learning_outcomes.all %}
+		<div class="outcome-item">
+			<span class="outcome-number">{{ forloop.counter }}</span>
+			{{ outcome.description }}
+			{% if outcome.competency_code %}
+			<br><small style="color: #666;">Competency: {{ outcome.competency_code }}</small>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<!-- Topics and Schedule -->
+	{% if module.topics.all %}
+	<div class="section page-break">
+		<h2 class="section-title">Topics and Schedule</h2>
+		<table>
+			<thead>
+				<tr>
+					<th style="width: 40%;">Topic</th>
+					<th style="width: 12%;">Lectures</th>
+					<th style="width: 12%;">Practicals</th>
+					<th style="width: 12%;">Self-study</th>
+					<th style="width: 12%;">Total</th>
+					<th style="width: 12%;">Assignments</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for topic in module.topics.all %}
+				<tr>
+					<td><strong>{{ topic.title }}</strong></td>
+					<td>{{ topic.lecture_hours }}h</td>
+					<td>{{ topic.practical_hours }}h</td>
+					<td>{{ topic.self_study_hours }}h</td>
+					<td><strong>{{ topic.total_contact_hours|add:topic.self_study_hours }}h</strong>
+					</td>
+					<td>{{ topic.assignments|default:"-" }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	{% endif %}
+
+	<!-- Assessment Methods -->
+	{% if module.assessments.all %}
+	<div class="section">
+		<h2 class="section-title">Assessment Methods</h2>
+		{% for assessment in module.assessments.all %}
+		<div class="assessment-item">
+			<div class="assessment-method">
+				{{ assessment.method }}
+				<span class="assessment-weight">{{ assessment.weight_percentage }}%</span>
+			</div>
+			<div style="margin: 5px 0;">
+				<strong>Timing:</strong> {{ assessment.timing }}
+			</div>
+			<div>
+				<strong>Criteria:</strong> {{ assessment.criteria }}
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<!-- Literature -->
+	{% if module.literature.all %}
+	<div class="section">
+		<h2 class="section-title">Literature</h2>
+		{% regroup module.literature.all by literature_type as literature_groups %}
+		{% for group in literature_groups %}
+		<h3 style="color: #007bff; font-size: 12pt; margin: 20px 0 10px 0;">
+			{{ group.grouper|title }}
+		</h3>
+		{% for lit in group.list %}
+		<div class="literature-item">
+			<strong>{{ lit.author }}</strong> ({{ lit.year }}). <em>{{ lit.title }}</em>
+			{% if lit.volume_or_issue %}, {{ lit.volume_or_issue }}{% endif %}.
+			{{ lit.publisher_or_url }}
+		</div>
+		{% endfor %}
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	<!-- Footer -->
+	<div class="section" style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px;">
+		<div style="text-align: center; color: #666; font-size: 9pt;">
+			<p>Generated on {{ "now"|date:"F j, Y \a\t g:i A" }}</p>
+			<p>Module Manager - {{ module.university }}</p>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -8,4 +8,5 @@ urlpatterns = [
     path('modules/<int:pk>/', views.module_detail, name='module_detail'),
     path('modules/<int:pk>/edit/', views.module_edit, name='module_edit'),
     path('modules/<int:pk>/delete/', views.module_delete, name='module_delete'),
+    path('modules/<int:pk>/pdf/', views.module_pdf, name='module_pdf'),
 ]

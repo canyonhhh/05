@@ -17,9 +17,9 @@
 		<a href="{% url 'module_edit' module.pk %}" class="btn btn-outline-primary">
 			<i class="bi bi-pencil me-1"></i>Edit
 		</a>
-		<button type="button" class="btn btn-outline-success">
+		<a href="{% url 'module_pdf' module.pk %}" class="btn btn-outline-success">
 			<i class="bi bi-file-pdf me-1"></i>Export PDF
-		</button>
+		</a>
 		<a href="{% url 'module_delete' module.pk %}" class="btn btn-outline-danger">
 			<i class="bi bi-trash me-1"></i>Delete
 		</a>
